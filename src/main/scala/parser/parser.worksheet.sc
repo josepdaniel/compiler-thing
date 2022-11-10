@@ -1,37 +1,12 @@
-import parser.{Parser, ParseResult}
+import parser.*
 
-def charParser(a: Char): Parser[Char] = new Parser[Char] {
-  def _parse(s: String): ParseResult[Char] =
-    if s.charAt(0) == a
-    then ParseResult(Some(a), s.slice(1, s.length()))
-    else ParseResult(None, s)
-}
+IntParser._parse("32")
+IntParser._parse("3.2")
 
-val aParser = charParser('a')
-val bParser = charParser('b')
+IntParser._parse("32")
+FloatParser._parse("3.")
+FloatParser._parse("3.1")
 
-val aThenBParser = aParser *> bParser
-aThenBParser._parse("absolutely")
-aThenBParser._parse("assolutely")
-
-val aThenBParserButKeepA = aParser <* bParser
-aThenBParserButKeepA._parse("absolutely")
-aThenBParserButKeepA._parse("assolutely")
-aThenBParserButKeepA.backtrack._parse("assolutely")
-
-val aAndBParser = aParser ~ bParser
-aAndBParser._parse("absolutely")
-aAndBParser._parse("assolutely")
-
-val charToNumberParser = aParser.map(c => c.toInt)
-charToNumberParser.parse("awesome")
-
-val aaaParser = aParser.rep0
-aaaParser._parse("aaabsolutely")
-
-val a1Parser = aParser.rep1
-a1Parser._parse("aaabsolutely")
-
-val aOrBParser = aParser | bParser
-aOrBParser._parse("absolutely")
-aOrBParser._parse("bsolutely")
+ExpressionParser.parse("( add1 ( sub1 ( add1 2.3 ) ) )")
+ExpressionParser.parse("3")
+ExpressionParser.parse("3.2")

@@ -3,3 +3,4 @@ bin
 .bloop
 .metals
 .vscode
+.bsp
