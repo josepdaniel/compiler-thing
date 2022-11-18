@@ -1,11 +1,12 @@
 package parser
 import scala.util.Try
 import Parser.*
-import ast.*
-import scala.quoted.Expr
+import ast.Expression
+import ast.Const
 
-val IntParser = numericString.`try`(_.toIntOption).map(Expression.Integer.apply)
+val IntParser: Parser[Expression] =
+  numericString.`try`(_.toIntOption).map(i => Expression.C(Const.Integer(i)))
 
-val FloatParser = floatingPointNumericString
+val FloatParser: Parser[Expression] = floatingPointNumericString
   .`try`(_.toDoubleOption)
-  .map(Expression.FloatingPoint.apply)
+  .map(f => Expression.C(Const.FloatingPoint(f)))
