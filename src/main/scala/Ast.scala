@@ -7,8 +7,6 @@ enum Op1 {
 
 enum Const {
   case Integer(i: Int)
-  case FloatingPoint(i: Double)
-  case Error(msg: String)
 }
 
 enum Expression {
@@ -17,4 +15,3 @@ enum Expression {
 }
 
 def Integer(i: Int) = Expression.C(Const.Integer(i))
-def FloatingPoint(f: Double) = Expression.C(Const.FloatingPoint(f))

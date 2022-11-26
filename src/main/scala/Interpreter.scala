@@ -9,19 +9,16 @@ def interpretProgram(e: Expression): Unit = {
   interpret(e) match {
     case C(c) =>
       c match {
-        case Error(msg)       => println(s"Runtime rror: $msg")
-        case FloatingPoint(i) => println(i)
-        case Integer(i)       => println(i)
+        case Integer(i) => println(i)
       }
+    case other => println(s"Something went wrong yo")
   }
 }
 
 def interpret(e: Expression): Expression = {
   e match {
-    case int @ C(Integer(i))         => int
-    case float @ C(FloatingPoint(f)) => float
-    case error @ C(Error(msg))       => error
-    case Prim1(op, e)                => interpretOp1(op, e)
+    case int @ C(Integer(i)) => int
+    case Prim1(op, e)        => interpretOp1(op, e)
   }
 }
 
@@ -33,13 +30,9 @@ def interpretOp1(op: Op1, e: Expression): Expression = {
 }
 
 def interpAdd1(e: Expression): Expression = interpret(e) match {
-  case C(FloatingPoint(f)) => C(FloatingPoint(f + 1.0))
-  case C(Integer(i))       => C(Integer(i + 1))
-  case other => C(Error(s"Can not apply `add1` to an object of type $other"))
+  case C(Integer(i)) => C(Integer(i + 1))
 }
 
 def interpSub1(e: Expression): Expression = interpret(e) match {
-  case C(FloatingPoint(f)) => C(FloatingPoint(f - 1.0))
-  case C(Integer(i))       => C(Integer(i - 1))
-  case other => C(Error(s"Can not apply `sub1` to an object of type $other"))
+  case C(Integer(i)) => C(Integer(i - 1))
 }

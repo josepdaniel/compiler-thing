@@ -28,6 +28,8 @@ enum Asm(val str: String) {
   case Section(name: SectionName) extends Asm(s"\tsection .${name.toString}")
   case Global(label: String) extends Asm(s"\tglobal ${label}")
   case Label(label: String) extends Asm(s"${label}:")
-  case Mov(dst: GPRegister, src: Long) extends Asm(s"\tmov ${dst.toString()} ${src}")
+  case Mov(dst: GPRegister, src: Long) extends Asm(s"\tmov ${dst.toString()}, ${src}")
+  case Add(dst: GPRegister, src: Long) extends Asm(s"\tadd ${dst.toString()}, ${src}")
+  case Sub(dst: GPRegister, src: Long) extends Asm(s"\tsub ${dst.toString()}, ${src}")
   case Ret extends Asm("\tret")
 }

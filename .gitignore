@@ -4,3 +4,4 @@ bin
 .metals
 .vscode
 .bsp
+artifacts/**
