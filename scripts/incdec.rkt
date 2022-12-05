@@ -1,1 +1,1 @@
-(add1 (sub1 (sub1 hello)))
+(add1 (sub1 (sub1 3)))
