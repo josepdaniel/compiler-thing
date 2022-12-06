@@ -7,8 +7,14 @@ import asm.*
 import asm.Asm.*
 import asm.GPRegister.*
 import asm.AssemblerDefault.*
+import ast.Expression
+import scala.util.Random
 
 type Compiler = Expression => Seq[Asm]
+
+def generateLabel(): String = {
+  "_" + Random.alphanumeric.take(15).mkString
+}
 
 val compile: Compiler = (e: Expression) => {
   e match {
@@ -18,6 +24,18 @@ val compile: Compiler = (e: Expression) => {
       }
     case Expression.Prim1(Op1.Add1, e) => compile(e) :+ Add(rax, 1)
     case Expression.Prim1(Op1.Sub1, e) => compile(e) :+ Sub(rax, 1)
+
+    // For now we can only compile ifZero type conditionals
+    case Expression.Conditional(Expression.Prim1(Op1.IsZero, e0), e1, e2) =>
+      val left = generateLabel()
+      val right = generateLabel()
+      compile(e0) ++ List(
+        Cmp(rax, 0),
+        Je(left)
+      ) ++ compile(e2) ++ List(
+        Jmp(right),
+        Label(left)
+      ) ++ compile(e1) :+ Label(right)
   }
 }
 

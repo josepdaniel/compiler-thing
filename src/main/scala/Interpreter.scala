@@ -22,7 +22,7 @@ def interpret(e: Expression): Expression = {
     case int @ C(Integer(i))      => int
     case b @ (C(True) | C(False)) => b
     case Prim1(op, e)             => interpretOp1(op, e)
-    case IfZero(e0, e1, e2)       => interpConditional(e0, e1, e2)
+    case Conditional(e0, e1, e2)  => interpConditional(e0, e1, e2)
   }
 }
 

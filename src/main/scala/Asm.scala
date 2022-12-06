@@ -31,5 +31,8 @@ enum Asm(val str: String) {
   case Mov(dst: GPRegister, src: Long) extends Asm(s"\tmov ${dst.toString()}, ${src}")
   case Add(dst: GPRegister, src: Long) extends Asm(s"\tadd ${dst.toString()}, ${src}")
   case Sub(dst: GPRegister, src: Long) extends Asm(s"\tsub ${dst.toString()}, ${src}")
+  case Cmp(a0: GPRegister, a1: Long) extends Asm(s"\tcmp ${a0.toString()}, ${a1}")
+  case Je(l: String) extends Asm(s"\tje $l")
+  case Jmp(l: String) extends Asm(s"\tjmp $l")
   case Ret extends Asm("\tret")
 }
